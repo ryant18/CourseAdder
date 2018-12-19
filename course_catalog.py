@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 url = 'https://banweb.banner.vt.edu/ssb/prod/HZSKVTSC.P_ProcRequest'
 
+
 class Course:
     def __init__(self, crn, coursenumber, name, instructor,
                  days, starttime, endtime, location):
@@ -27,6 +28,7 @@ def gettermyear():
     return openterms
 
 
+# Get the information of the class from the timetable
 def getclass(crn, termyear):
     postdata = {
         'CAMPUS': '0',
@@ -48,13 +50,25 @@ def getclass(crn, termyear):
         days = cells[7].strip()
         starttime = cells[8].strip()
         endtime = cells[9].strip()
-        location = cells[10].strip
+        location = cells[10].strip()
 
         opencourse = Course(crn, coursenumber, name, instructor,
                             days, starttime, endtime, location)
-
     return opencourse
 
 
+# Determines if the class is currently open
+def isclassopen(crn, termyear):
+    postdata = {
+        'CAMPUS': '0',
+        'TERMYEAR': termyear,
+        'CORE_CODE': 'AR%',
+        'crn': crn,
+        'open_only': 'on',
+        'BTN_PRESSED': 'FIND class sections',
+    }
 
+    req = requests.post(url, postdata).content
+    rows = BeautifulSoup(req, 'html5lib').select('table.dataentrytable tbody tr')
+    return len(rows) > 1
 
