@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://banweb.banner.vt.edu/ssb/prod/HZSKVTSC.P_ProcRequest'
+timetable_url = 'https://banweb.banner.vt.edu/ssb/prod/HZSKVTSC.P_ProcRequest'
 
 
 class Course:
@@ -19,7 +19,7 @@ class Course:
 
 # Get the semesters that are currently open for viewing in the timetable
 def gettermyear():
-    req = requests.get(url).content
+    req = requests.get(timetable_url).content
     opentermselector = BeautifulSoup(req, "html5lib").find("select", {"name": "TERMYEAR"})
     openterms = {}
     for term in opentermselector.findAll("option"):
@@ -29,6 +29,7 @@ def gettermyear():
 
 
 # Get the information of the class from the timetable
+# Returns none if the crn does not exist in the given term
 def getclass(crn, termyear):
     postdata = {
         'CAMPUS': '0',
@@ -39,7 +40,7 @@ def getclass(crn, termyear):
     }
     opencourse = None
 
-    req = requests.post(url, postdata).content
+    req = requests.post(timetable_url, postdata).content
     rows = BeautifulSoup(req, 'html5lib').select('table.dataentrytable tbody tr')
     if len(rows) > 1:
         cells = list(map(lambda x: x.get_text(), rows[1].select('td')))
@@ -68,7 +69,7 @@ def isclassopen(crn, termyear):
         'BTN_PRESSED': 'FIND class sections',
     }
 
-    req = requests.post(url, postdata).content
+    req = requests.post(timetable_url, postdata).content
     rows = BeautifulSoup(req, 'html5lib').select('table.dataentrytable tbody tr')
     return len(rows) > 1
 
