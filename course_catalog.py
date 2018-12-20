@@ -43,15 +43,15 @@ def getclass(crn, termyear):
     req = requests.post(timetable_url, postdata).content
     rows = BeautifulSoup(req, 'html5lib').select('table.dataentrytable tbody tr')
     if len(rows) > 1:
-        cells = list(map(lambda x: x.get_text(), rows[1].select('td')))
-        crn = cells[0].strip()
-        coursenumber = cells[1].strip()
-        name = cells[2].strip()
-        instructor = cells[6].strip()
-        days = cells[7].strip()
-        starttime = cells[8].strip()
-        endtime = cells[9].strip()
-        location = cells[10].strip()
+        cells = list(map(lambda x: x.get_text().strip(), rows[1].select('td')))
+        crn = cells[0]
+        coursenumber = cells[1]
+        name = cells[2]
+        instructor = cells[6]
+        days = cells[7]
+        starttime = cells[8]
+        endtime = cells[9]
+        location = cells[10]
 
         opencourse = Course(crn, coursenumber, name, instructor,
                             days, starttime, endtime, location)

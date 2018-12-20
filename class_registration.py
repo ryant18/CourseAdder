@@ -9,8 +9,9 @@ registration_url = 'https://apps.es.vt.edu/StudentRegistrationSsb/ssb/classRegis
 # Extends the selenium driver to work specifically with the virginia tech
 class WebPage(webdriver.Firefox):
     # Creates the empty webpage, does nothing else
-    def __init__(self):
+    def __init__(self, termyear):
         super(WebPage, self).__init__()
+        self.login(termyear)
 
     # Tries to click the given button until it is loaded
     # Deals with the webpage loading slow and when the
@@ -46,6 +47,7 @@ class WebPage(webdriver.Firefox):
         self.clickbutton(self.find_element_by_id, 'enterCRNs-tab')
 
 
-WebPage().login("Spring")
+
+
 
 
