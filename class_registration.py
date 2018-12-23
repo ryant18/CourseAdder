@@ -64,23 +64,13 @@ class WebPage(webdriver.Firefox):
         time.sleep(0.5)
         self.clickbutton(self.find_element_by_id, 'saveButton')
 
-    def getexistingclasses(self):
-        addedclasses = self.find_elements_by_class_name('odd')
-        addedclasses += self.find_elements_by_class_name('even')
-        return addedclasses
-
     # Adds the crn to the class schedule
     # checks if the class is in the dropdown menu
     def addcrn(self, crn):
-        addedclasses = self.getexistingclasses()
+        addedclasses = self.find_elements_by_class_name('odd') + \
+                       self.find_elements_by_class_name('even')
         for row in addedclasses:
             if str(crn) in row.text:
                 self.addexistingcrn(row.get_attribute('data-id'))
                 return
         self.addnewcrn(crn)
-
-
-a = WebPage("spring")
-print('second')
-a.addcrn(14277)
-print('done')
