@@ -18,7 +18,7 @@ class Course:
 
 
 # Get the semesters that are currently open for viewing in the timetable
-def gettermyear():
+def gettermyears():
     req = requests.get(timetable_url).content
     opentermselector = BeautifulSoup(req, "html5lib").find("select", {"name": "TERMYEAR"})
     openterms = {}

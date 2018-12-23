@@ -46,8 +46,7 @@ class WebPage(webdriver.Firefox):
         # Shift to crn tab
         self.clickbutton(self.find_element_by_id, 'enterCRNs-tab')
 
-
-
-
-
-
+    # Adds the crn to the class schedule
+    # has to deal with if the class has already been added before
+    def addcrn(self, crn):
+        pass
