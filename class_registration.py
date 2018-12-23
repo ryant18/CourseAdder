@@ -2,6 +2,7 @@ import time
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 registration_url = 'https://apps.es.vt.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration'
 
@@ -17,13 +18,14 @@ class WebPage(webdriver.Firefox):
     # Deals with the webpage loading slow and when the
     # button is loaded but not in view to be clicked
     def clickbutton(self, findbutton, buttonid):
-        timeout = time.time() + 60 * 5
+        timeout = time.time() + 60
         while True:
             if time.time() > timeout:
                 self.close()
+                return
             try:
                 findbutton(buttonid).click()
-                break
+                return
             except (selenium.common.exceptions.NoSuchElementException,
                     selenium.common.exceptions.ElementNotInteractableException,
                     selenium.common.exceptions.ElementClickInterceptedException):
@@ -46,7 +48,39 @@ class WebPage(webdriver.Firefox):
         # Shift to crn tab
         self.clickbutton(self.find_element_by_id, 'enterCRNs-tab')
 
+    def addnewcrn(self, crn):
+        self.find_element_by_id('txt_crn1').send_keys(crn)
+        self.clickbutton(self.find_element_by_id, 'addCRNbutton')
+        time.sleep(0.5)
+        self.clickbutton(self.find_element_by_id, 'saveButton')
+
+    def addexistingcrn(self, dataid):
+        buttoncss = "[data-id='" + str(dataid) + "'][data-property='actionItem']"
+        self.clickbutton(self.find_element_by_css_selector, buttoncss)
+        dropdownadd = self.find_element_by_css_selector("[class='select2-results-"
+                                                        "dept-0 select2-result select2-"
+                                                        "result-selectable'][role='option']")
+        ActionChains(self).move_to_element(dropdownadd).click().perform()
+        time.sleep(0.5)
+        self.clickbutton(self.find_element_by_id, 'saveButton')
+
+    def getexistingclasses(self):
+        addedclasses = self.find_elements_by_class_name('odd')
+        addedclasses += self.find_elements_by_class_name('even')
+        return addedclasses
+
     # Adds the crn to the class schedule
-    # has to deal with if the class has already been added before
+    # checks if the class is in the dropdown menu
     def addcrn(self, crn):
-        pass
+        addedclasses = self.getexistingclasses()
+        for row in addedclasses:
+            if str(crn) in row.text:
+                self.addexistingcrn(row.get_attribute('data-id'))
+                return
+        self.addnewcrn(crn)
+
+
+a = WebPage("spring")
+print('second')
+a.addcrn(14277)
+print('done')
