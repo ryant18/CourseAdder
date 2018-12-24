@@ -3,20 +3,24 @@ from threading import Event
 import course_catalog as cc
 import class_registration as cr
 
+STARTING_DELAY = 30
+
 
 class App:
     # Must set the termyear before doing anything else
     def __init__(self):
         self.crns = []
         self.continuecheck = Event()
-        self.delay = 30
+        self.delay = STARTING_DELAY
         self.termyear = None
 
     # Crns are not the same between semester, so must reset list every time
+    # Returns if the list of crns need to be reset
     def settermyear(self, termyear):
         if termyear != self.termyear:
             self.crns = []
             self.termyear = termyear
+        return termyear != self.termyear
 
     # Need to check if return result is none to determine if valid crn
     def addcrn(self, crn):
@@ -39,7 +43,7 @@ class App:
                 if cc.isclassopen(crn, self.termyear):
                     browser.addcrn(crn)
             self.continuecheck.wait(self.delay)
-        browser.__exit__()
+        browser.close()
 
     def startcheck(self):
         self.continuecheck.clear()
