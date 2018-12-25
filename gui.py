@@ -82,7 +82,7 @@ class MainDisplayWindow(QMainWindow):
             self.app.setdelaytime(int(delay))
 
     def changetermyear(self, semester):
-        if self.app.settermyear(self.termyears[semester]):
+        if self.app.settermyear(semester, self.termyears[semester]):
             self.deletetablerows()
 
     def togglecrncheck(self, val):
@@ -105,6 +105,7 @@ class MainDisplayWindow(QMainWindow):
             deletebutton.setToolTip("Delete Course")
             erroritem = QTableWidgetItem("Not a valid crn")
             erroritem.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+            deletebutton.setFlat(True)
             deletebutton.setStyleSheet('QPushButton { color: red }')
             erroritem.setForeground(QBrush(QColor(255, 0, 0)))
             self.crntable.setCellWidget(newrowindex, 0, deletebutton)
@@ -122,6 +123,7 @@ class MainDisplayWindow(QMainWindow):
                             course.days, course.starttime, course.endtime, course.location]
         deletebutton = QPushButton(courseattributes[0])
         deletebutton.setToolTip("Delete Course")
+        deletebutton.setFlat(True)
         deletebutton.clicked.connect(self.deleterow)
         self.crntable.setCellWidget(row, 0, deletebutton)
         for i in range(1, self.crntable.columnCount()):

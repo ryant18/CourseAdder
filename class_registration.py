@@ -18,7 +18,7 @@ class WebPage(webdriver.Firefox):
     # Deals with the webpage loading slow and when the
     # button is loaded but not in view to be clicked
     def clickbutton(self, findbutton, buttonid):
-        timeout = time.time() + 60
+        timeout = time.time() + 60 * 2
         while True:
             if time.time() > timeout:
                 self.close()

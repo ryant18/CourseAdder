@@ -12,20 +12,22 @@ class App:
         self.crns = []
         self.continuecheck = Event()
         self.delay = STARTING_DELAY
-        self.termyear = None
+        self.termyearstr = None
+        self.termyearid = None
 
     # Crns are not the same between semester, so must reset list every time
     # Returns if the list of crns need to be reset
-    def settermyear(self, newtermyear):
-        reset = newtermyear != self.termyear
+    def settermyear(self, termyearstr, termyearid):
+        reset = termyearstr != self.termyearstr
         if reset:
             self.crns = []
-            self.termyear = newtermyear
+            self.termyearstr = termyearstr
+            self.termyearid = termyearid
         return reset
 
     # Need to check if return result is none to determine if valid crn
     def addcrn(self, crn):
-        crncourse = cc.getclass(crn, self.termyear)
+        crncourse = cc.getclass(crn, self.termyearid)
         if crncourse is not None:
             self.crns.append(crn)
         return crncourse
@@ -39,10 +41,13 @@ class App:
 
     # Not to be called by outside functions
     def runcheck(self):
-        browser = cr.WebPage(self.termyear)
+        print("Starting Check")
+        browser = cr.WebPage(self.termyearstr)
         while not self.continuecheck.is_set():
             for crn in self.crns:
-                if cc.isclassopen(crn, self.termyear):
+                print('Checking ' + str(crn))
+                if cc.isclassopen(crn, self.termyearid):
+                    print('Crn is open ' + str(crn))
                     browser.addcrn(crn)
             self.continuecheck.wait(self.delay)
         browser.close()
