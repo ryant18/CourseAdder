@@ -97,39 +97,35 @@ class MainDisplayWindow(QMainWindow):
     def crninputfromtable(self):
         newrowindex = self.crntable.rowCount()-1
         self.crntable.insertRow(newrowindex)
+
+        deletebutton = QPushButton(self.crntableinput.text())
+        deletebutton.setToolTip("Delete Course")
+        deletebutton.setFlat(True)
+        self.crntable.setCellWidget(newrowindex, 0, deletebutton)
+        deletebutton.clicked.connect(self.deleterow)
+
+        self.inputcourseinfo(newrowindex)
+
+        self.crntableinput.setText('')
+
+    def inputcourseinfo(self, newrowindex):
         crncourse = self.app.addcrn(int(self.crntableinput.text()))
         if crncourse is not None:
-            self.inputcourseinfo(newrowindex, crncourse)
+            courseattributes = [crncourse.crn, crncourse.coursenumber, crncourse.name, crncourse.instructor,
+                                crncourse.days, crncourse.starttime, crncourse.endtime, crncourse.location]
+            for i in range(1, self.crntable.columnCount()):
+                item = QTableWidgetItem(courseattributes[i])
+                item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+                self.crntable.setItem(newrowindex, i, item)
         else:
-            deletebutton = QPushButton(self.crntableinput.text())
-            deletebutton.setToolTip("Delete Course")
             erroritem = QTableWidgetItem("Not a valid crn")
             erroritem.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
-            deletebutton.setFlat(True)
-            deletebutton.setStyleSheet('QPushButton { color: red }')
             erroritem.setForeground(QBrush(QColor(255, 0, 0)))
-            self.crntable.setCellWidget(newrowindex, 0, deletebutton)
-            deletebutton.clicked.connect(self.deleterow)
             self.crntable.setItem(newrowindex, 1, erroritem)
             for i in range(2, self.crntable.columnCount()):
                 item = QTableWidgetItem()
                 item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
                 self.crntable.setItem(newrowindex, i, item)
-
-        self.crntableinput.setText('')
-
-    def inputcourseinfo(self, row, course):
-        courseattributes = [course.crn, course.coursenumber, course.name, course.instructor,
-                            course.days, course.starttime, course.endtime, course.location]
-        deletebutton = QPushButton(courseattributes[0])
-        deletebutton.setToolTip("Delete Course")
-        deletebutton.setFlat(True)
-        deletebutton.clicked.connect(self.deleterow)
-        self.crntable.setCellWidget(row, 0, deletebutton)
-        for i in range(1, self.crntable.columnCount()):
-            item = QTableWidgetItem(courseattributes[i])
-            item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
-            self.crntable.setItem(row, i, item)
 
     def deleterow(self):
         self.app.removecrn(int(self.sender().text()))
