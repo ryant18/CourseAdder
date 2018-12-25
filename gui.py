@@ -66,8 +66,14 @@ class MainDisplayWindow(QMainWindow):
         self.crntableinput.setText('')
 
     def setuplayout(self):
-        self.termdelaybottomleft.addWidget(self.termyearcombobox)
-        self.termdelaybottomleft.addWidget(self.delaylineedit)
+        termyearhbox = QHBoxLayout()
+        termyearhbox.addWidget(QLabel('Semester'))
+        termyearhbox.addWidget(self.termyearcombobox)
+        self.termdelaybottomleft.addLayout(termyearhbox)
+        delayhbox = QHBoxLayout()
+        delayhbox.addWidget(QLabel('Delay (sec)'))
+        delayhbox.addWidget(self.delaylineedit)
+        self.termdelaybottomleft.addLayout(delayhbox)
 
         self.bottomrow.addLayout(self.termdelaybottomleft)
         self.bottomrow.addStretch(1)
