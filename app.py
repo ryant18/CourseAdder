@@ -49,7 +49,7 @@ class App:
                 if cc.isclassopen(crn, self.termyearid):
                     print('Crn is open ' + str(crn))
                     browser.addcrn(crn)
-            browser.clickbutton(self.find_element_by_id, 'saveButton')
+            browser.clickbutton(browser.find_element_by_id, 'saveButton')
             self.continuecheck.wait(self.delay)
         browser.close()
 
