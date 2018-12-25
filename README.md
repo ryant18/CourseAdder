@@ -13,3 +13,4 @@ An automated way to add classes to your virginia tech class schedule
 * Add way to import / save crn lists
 * Stop registration page from timing out
 * Remove delay from requesting the termyears at startup
+* Bug where typing fewer than 5 digits in crn box, the crn has 0's appended to end

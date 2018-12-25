@@ -16,11 +16,12 @@ class App:
 
     # Crns are not the same between semester, so must reset list every time
     # Returns if the list of crns need to be reset
-    def settermyear(self, termyear):
-        if termyear != self.termyear:
+    def settermyear(self, newtermyear):
+        reset = newtermyear != self.termyear
+        if reset:
             self.crns = []
-            self.termyear = termyear
-        return termyear != self.termyear
+            self.termyear = newtermyear
+        return reset
 
     # Need to check if return result is none to determine if valid crn
     def addcrn(self, crn):
@@ -30,7 +31,8 @@ class App:
         return crncourse
 
     def removecrn(self, crn):
-        self.crns.remove(crn)
+        if crn in self.crns:
+            self.crns.remove(crn)
 
     def setdelaytime(self, delay):
         self.delay = delay
