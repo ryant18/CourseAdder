@@ -2,6 +2,7 @@
 An automated way to add classes to your virginia tech class schedule
 This program is similar [course pickle](https://coursepickle.com/), but also adds 
 the class to your schedule instead of just notifying you.
+![CourseAdder GUI overview](https://github.com/ryant18/CourseAdder/blob/master/images/overview.PNG)
 # Introduction #
 # Requirements #
 # How to Use #
