@@ -4,6 +4,14 @@ This program is similar [course pickle](https://coursepickle.com/), but also add
 the class to your schedule instead of just notifying you.
 ![CourseAdder GUI overview](https://github.com/ryant18/CourseAdder/blob/master/images/overview.PNG)
 # Introduction #
+This program was developed on python 3.7.
+First, copy the repository
+'''
+git clone https://github.com/ryant18/CourseAdder.git
+'''
+It is recommended to install all the dependicies into a virtaul enviroment
+![Input each crn into the textbox]()
+
 # Requirements #
 # How to Use #
 
