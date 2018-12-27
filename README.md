@@ -30,6 +30,7 @@ Select the semester you want to register for
 ![Select semester](https://github.com/ryant18/CourseAdder/blob/master/images/termselect.jpg)
 
 Add all the crns that you want to add. If your classes are not showing up correctly, make sure you have the right semester selected.
+
 ![Add crns](https://github.com/ryant18/CourseAdder/blob/master/images/startinginput.jpg)
 
 Click on a crn to delete the row
