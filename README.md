@@ -3,16 +3,28 @@ An automated way to add classes to your virginia tech class schedule
 This program is similar [course pickle](https://coursepickle.com/), but also adds 
 the class to your schedule instead of just notifying you.
 ![CourseAdder GUI overview](https://github.com/ryant18/CourseAdder/blob/master/images/overview.PNG)
-# Introduction #
+# Installation #
 This program was developed on python 3.7.
-First, copy the repository
-'''
-git clone https://github.com/ryant18/CourseAdder.git
-'''
-It is recommended to install all the dependicies into a virtaul enviroment
-![Input each crn into the textbox]()
 
-# Requirements #
+First, copy the repository
+
+    git clone https://github.com/ryant18/CourseAdder.git
+    
+It is recommended to install all the dependicies into a virtaul enviroment
+    
+    virtualenv venv
+    source venv/bin/activate
+    
+Install all requirements
+    
+    pip install -r requirements.txt
+    
+Download the latest version of [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) and place the executable into 'venv/Scripts/'
+
+Start the application
+
+    python gui.py
+
 # How to Use #
 
 # TODO / Future changes #
