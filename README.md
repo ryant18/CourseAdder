@@ -5,7 +5,9 @@ the class to your schedule instead of just notifying you.
 ![CourseAdder GUI overview](https://github.com/ryant18/CourseAdder/blob/master/images/overview.PNG)
 # Introduction #
 This program was developed on python 3.7.
+
 First, copy the repository
+
 '''
 git clone https://github.com/ryant18/CourseAdder.git
 '''
